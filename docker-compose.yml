@@ -1,0 +1,39 @@
+services:
+  signaling:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./signaling:/app
+      - signaling_node_modules:/app/node_modules
+    environment:
+      - PORT=5432
+    command: sh -c "npm ci && node index.js"
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+
+  client:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./client:/app
+      - client_node_modules:/app/node_modules
+    environment:
+      NEXT_PUBLIC_PEER_HOST: signaling
+      NEXT_PUBLIC_PEER_PORT: 5432
+      NEXT_PUBLIC_PEER_PATH: /
+      NEXT_PUBLIC_PEER_SECURE: 'false'
+      # Uncomment and set if you have TURN/STUN
+      # NEXT_PUBLIC_STUN_URL: "turns:your-stun-host:5349"
+      # NEXT_PUBLIC_STUN_USERNAME: "webrtc"
+      # NEXT_PUBLIC_STUN_CREDENTIAL: "password"
+    command: sh -c "npm ci && npm run dev -- -H 0.0.0.0 -p 3000"
+    depends_on:
+      - signaling
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+
+volumes:
+  client_node_modules:
+  signaling_node_modules:
