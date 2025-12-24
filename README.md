@@ -49,13 +49,13 @@
 
 **Manual (no Makefile) local run**
 
-- Signaling: `cd signaling && npm ci && PORT=5432 npm start`
-- Client: `cd client && npm ci && NEXT_PUBLIC_PEER_HOST=localhost NEXT_PUBLIC_PEER_PORT=5432 NEXT_PUBLIC_PEER_PATH=/ NEXT_PUBLIC_PEER_SECURE=false npm run dev -- -H 0.0.0.0`
+- Signaling: `cd signaling && cp .env.example .env && npm ci && npm start`
+- Client: `cd client && cp .env.example .env && npm ci && npm run dev`
 
 **Access**
 
 - Client UI: http://localhost:3000
-- Signaling server: ws at localhost:5432 (PeerJS)
+- Signaling server: ws at localhost:5432 (Peer)
 
 **Notes**
 
