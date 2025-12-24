@@ -27,7 +27,7 @@ services:
       # NEXT_PUBLIC_STUN_URL: "turns:your-stun-host:5349"
       # NEXT_PUBLIC_STUN_USERNAME: "webrtc"
       # NEXT_PUBLIC_STUN_CREDENTIAL: "password"
-    command: sh -c "npm ci && npm run dev -- -H 0.0.0.0 -p 3000"
+    command: sh -c "npm ci && npm run dev"
     depends_on:
       - signaling
     ports:
